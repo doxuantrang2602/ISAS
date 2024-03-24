@@ -17,7 +17,7 @@ def euler_phi(n):
 if __name__ == '__main__':
     a=int(input("Nhập a:"))
     b=int(input("Nhập b:"))
-    n=int(input("Nập n: "))
+    n=int(input("Nhập n: "))
 
     for i in range(1,euler_phi(n)):
         p= Tinh_Mod(a,i,n)
