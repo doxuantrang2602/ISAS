@@ -17,3 +17,4 @@ for m, k in zip(M, K):
             C.append(a)
 
 print("Kết của của AutoKey: ", *C, sep="")
+
