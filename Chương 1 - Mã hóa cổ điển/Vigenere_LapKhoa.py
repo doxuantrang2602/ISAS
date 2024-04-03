@@ -12,7 +12,7 @@ if __name__ == '__main__':
     for i in range(0,26):
         Alpha[lstAlpha[i]] = i # Ánh xạ chỉ số i cho mỗi kí tự
     # Xử lý mở rộng K
-    moRong_K = K * (len(M) // len(K)) + K[:len(M) % len(K)]
+    moRong_K = K * (len(M) // len(K)) + K[:len(M) % len(K)] # Số lặp toàn bộ + phần dư sau lặp toàn bộ
 
     C = []  # Output C kết quả
 
