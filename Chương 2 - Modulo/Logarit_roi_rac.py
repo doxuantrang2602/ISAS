@@ -16,8 +16,12 @@ def euler_Phi(n):
     return res
 
 def logaritRoiRac(a, b, n):
+    print("=========")
+    print("| i | p |")
+    print("=========")
     for i in range(1, euler_Phi(n)):
         p = Tinh_Mod(a, i, n)
+        print(f"|{i:<3}|{p:<3}|")
         if p == b: # Kiểm tra xem a^i mod n có bằng b không => loga b (mod n)=i
             print("=> log{} {} (mod {}) = {}".format(a,b,n,i))
             break
