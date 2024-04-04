@@ -31,8 +31,8 @@ def euclidMoRong(n, a):
     return res
 
 if __name__ == "__main__":
-    a = 546
-    n = 7001
+    a = int(input("Nhập a = "))
+    n = int(input("Nhập n = "))
     res = euclidMoRong(n, a)
     if res is not None:
         print(f"=> Output C = {res}")
