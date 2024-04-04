@@ -4,35 +4,40 @@ Input: a = 113; k = 58; n = 37259
 Tìm Output: b =
 '''
 
-def extended_gcd(a, b):
-    # Tìm số nguyên x, y sao cho ax + by = gcd(a, b)
-    if b == 0:
-        return a, 1, 0
-    else:
-        d, x, y = extended_gcd(b, a % b)
-        return d, y, x - (a // b) * y
+def euclidMoRong(a, n):
+    r1, r2 = n, a
+    x1, x2 = 1, 0
+    y1, y2 = 0, 1
 
-def modular_inverse(a, m):
-    # Tìm nghịch đảo modulo của a trong modulo m
-    d, x, y = extended_gcd(a, m)
-    if d != 1:
-        raise ValueError("a không có nghịch đảo modulo trong modulo m")
-    return x % m
+    while r2 != 0:
+        q = r1 // r2  # Tính thương
+        r1, r2 = r2, r1 - q * r2  # Cập nhật r
+        x1, x2 = x2, x1 - q * x2  # Cập nhật x
+        y1, y2 = y2, y1 - q * y2  # Cập nhật y
+    if r1 == 1:
+        res = y1
+    else: res = None
+    # Nếu res là số âm
+    if res is not None and res < 0:
+        res += n
+    return res
+
+def ptThuaSoNguyenTo(n):
+    lst = []
+    p = 2
+    while n > 1:
+        while n % p == 0:
+            lst.append(p)
+            n //= p
+        p += 1
+    return lst
 
 def dinhLyPhanDuTrungHoa(a, k, n):
     print("Input:")
     print(f"a = {a}; k = {k}; n = {n}")
 
     # Bước 1: Phân tích n thành tích của các số nguyên tố cùng nhau từng đôi một
-    factors = []
-    temp_n = n
-    i = 2
-    while temp_n > 1:
-        if temp_n % i == 0:
-            factors.append(i)
-            while temp_n % i == 0:
-                temp_n //= i
-        i += 1
+    factors = ptThuaSoNguyenTo(n)
 
     print("Phân tích n thành tích các số nguyên tố cùng nhau:")
     print("m1, m2, ..., mk =", factors)
@@ -44,22 +49,27 @@ def dinhLyPhanDuTrungHoa(a, k, n):
     print("Tính Mi và ci:")
     M_values = []
     c_values = []
-    for mi in factors:
-        Mi = M // mi
-        ci = modular_inverse(Mi, mi)
+    for i,m in enumerate(factors,1):
+        Mi = M // m
+        ci = euclidMoRong(Mi, m)
         M_values.append(Mi)
         c_values.append(ci)
-        print(f"Mi = {Mi}, ci = {ci}")
+        print(f"M{i} = {Mi}, c{i} = {ci}")
 
     # Bước 4: Tính ai = a^k mod mi cho mỗi i
-    a_values = [pow(a, k, mi) for mi in factors]
+    a_values = []
+    for mi in factors:
+        a_values.append(pow(a, k, mi))
 
     print("Tính ai = a^k mod mi:")
-    for i, ai in enumerate(a_values):
-        print(f"a{i + 1} = {ai}")
+    for i, x in enumerate(a_values,1):
+        print(f"a{i} = {x}")
 
     # Bước 5: Tính A = Σ(ai * ci * Mi) mod M
-    A = sum(ai * ci * Mi for ai, ci, Mi in zip(a_values, c_values, M_values)) % M
+    A = 0
+    for i in range(len(factors)):
+        A += a_values[i] * c_values[i] * M_values[i]
+    A %= n
 
     print("Tính A = Σ(ai * ci * Mi) mod M:")
     print("A =", A)
@@ -71,4 +81,3 @@ if __name__ == "__main__":
     n = 37259
     b = dinhLyPhanDuTrungHoa(a, k, n)
     print("=> Output b =", b)
-

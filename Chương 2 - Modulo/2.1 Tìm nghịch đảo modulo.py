@@ -3,7 +3,7 @@ TÌM NGHỊCH ĐẢO 𝒙 = 𝒂^−𝟏 𝒎𝒐𝒅 𝒏 THEO ĐỊNH NGHĨA V
 Input: a = 3122; n = 3593
 Tìm Output: x =
 '''
-def euclidMoRong(n, a):
+def euclidMoRong(a, n):
     print(f"| {'r':>5} | {'q':>5} | {'x':>5} | {'y':>5}")  # In tiêu đề cột
     print("-"*32)
     r1, r2 = n, a
@@ -33,7 +33,7 @@ def euclidMoRong(n, a):
 if __name__ == "__main__":
     a = int(input("Nhập a = "))
     n = int(input("Nhập n = "))
-    res = euclidMoRong(n, a)
+    res = euclidMoRong(a, n)
     if res is not None:
         print(f"=> Output C = {res}")
     else:
