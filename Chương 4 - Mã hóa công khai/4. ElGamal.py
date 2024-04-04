@@ -53,5 +53,3 @@ if __name__ == "__main__":
     M_giaiMa = tinhMod(tinhMod(C2,1,q) * tinhModNghichDao(K_giaiMa,q), 1, q)
     print("An giải bản mã (C1, C2) được K = {}, M = {}".format(K_giaiMa, M_giaiMa))
 
-
-
