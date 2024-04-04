@@ -3,29 +3,21 @@ TÍNH GIÁ TRỊ HÀM EULER phi(n).
 Input: n = 3353
 Tìm Output: phi(n) =
 '''
-
-
+import math
 def phiEuler(n):
-    res = n  # Khởi tạo phi(n) bằng n
-    p = 2  # Bắt đầu với số nguyên tố nhỏ nhất
-
-    # Kiểm tra mọi số nguyên tố p cho đến căn bậc hai của n
-    while p * p <= n:
-        # Nếu p là ước số của n
-        if n % p == 0:
-            # Trừ đi tất cả các ước số p
-            while n % p == 0:
-                n //= p
-            res -= res // p
-        p += 1
-
-    # Nếu n còn lại là một số nguyên tố lớn hơn 1
+    res = n #Khởi tạo phi(n) = n
+    for i in range(2, int(math.sqrt(n)+1)):
+        if n % i == 0:
+            res = res * (1 - 1.0/i) # Giảm phi (n)
+            while n%i == 0:
+                n //= i # ta loại bỏ tất cả thừa số i khỏi n
     if n > 1:
-        res -= res // n
-
-    return res
+        res -= res/n
+    return int(res)
 
 if __name__ == "__main__":
-    n = 3353
-    res = phiEuler(n)
-    print(f"phi({n}) = {res}")
+    n = int(input("Nhập n = "))
+    phi_n = phiEuler(n)
+    print("=> Output phi(n) = {}".format(phi_n))
+
+
