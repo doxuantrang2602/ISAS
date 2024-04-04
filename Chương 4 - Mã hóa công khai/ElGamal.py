@@ -49,6 +49,7 @@ if __name__ == "__main__":
     # K = C1^xA mod q
     # M = (C2*K^-1) mod q = (C2 mod q * K^-1 mod q) mod q
     K_giaiMa = tinhMod(C1, xA, q)
+    #M_giai = ((C2 % q) * tinhModNghichDao(K_giaiMa, q)) % q
     M_giaiMa = tinhMod(tinhMod(C2,1,q) * tinhModNghichDao(K_giaiMa,q), 1, q)
     print("An giải bản mã (C1, C2) được K = {}, M = {}".format(K_giaiMa, M_giaiMa))
 
