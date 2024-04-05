@@ -1,3 +1,13 @@
+def tinhLuyThuaModulo(a, m, n):
+    res = 1 # Khởi tạo kết quả
+    a = a % n # Chuyển a thành a mod n
+    while m > 0:
+        if m % 2 == 1:
+            res = (res * a) % n  # Nếu m là số lẻ, nhân b với a
+        m = m // 2 # Hạ bậc lũy thừa m
+        a = (a * a) % n  # Cập nhật a
+    return res
+
 def euclidMoRong(n, a):
     r1, r2 = n, a
     x1, x2 = 1, 0
@@ -21,36 +31,3 @@ def ptThuaSoNguyenTo(n):
             n //= p
         p += 1
     return s
-
-def dinhLyPhanDuTrungHoa(a, k, n):
-    print("a = {}, k = {}, n = {}".format(a, k, n))
-    # Bước 1: Phân tích n thành tích của các số nguyên tố cùng nhau
-    fac = ptThuaSoNguyenTo(n)
-    print("m1,m2,...,mk", fac)
-
-    # Bước 2: Tính Mi = M / mi cho mỗi i và ci = Mi*(Mi^(-1) mod mi)
-    M = n  # M là tích của tất cả các m_i, ở đây chính là n
-    print("Tính Mi và ci:")
-    M_values = []
-    c_values = []
-    for mi in fac:
-        Mi = M // mi
-        ci = euclidMoRong(mi, Mi)
-        M_values.append(Mi)
-        c_values.append(ci)
-        print(f"Mi = {Mi}, ci = {ci}")
-
-    # Bước 3: Tính ai = a^k mod mi cho mỗi i
-    a_values = [pow(a, k, mi) for mi in fac]
-    print("Tính ai = a^k mod mi:")
-    for i, ai in enumerate(a_values):
-        print(f"a{i + 1} = {ai}")
-
-    # Bước 4: Tính A = Σ(ai * ci * Mi) mod M (i->k)
-    A = 0
-    for i in range(len(fac)):
-        A += a_values[i] * c_values[i] * M_values[i]
-    A %= n
-    print("Tính A = Σ(ai * ci * Mi) mod M:")
-    print("A = ",A)
-    return A
