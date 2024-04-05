@@ -51,7 +51,7 @@ def dinhLyPhanDuTrungHoa(a, k, n):
     c_values = []
     for i,m in enumerate(factors,1):
         Mi = M // m
-        ci = euclidMoRong(Mi, m)
+        ci = Mi*euclidMoRong(Mi, m)
         M_values.append(Mi)
         c_values.append(ci)
         print(f"M{i} = {Mi}, c{i} = {ci}")
