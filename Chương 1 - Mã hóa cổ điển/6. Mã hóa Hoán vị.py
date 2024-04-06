@@ -4,7 +4,6 @@ Key: K = 9
 Tìm Output: C =
 '''
 
-
 def maHoaHoanVi(text, key):
     text = text.replace(" ", "").upper() # Bỏ qua khoảng trắng và chuyển văn bản thành chữ hoa
     while len(text) % key != 0:
