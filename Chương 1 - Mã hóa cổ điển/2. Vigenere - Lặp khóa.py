@@ -1,7 +1,7 @@
 '''
 Input: M = LOVEISBLINDLOVE
 Key: K = WHENIN
-Tìm Output: C =
+Tìm Output: C = HVZRQFXSMALYKCI
 '''
 if __name__ == '__main__':
     lstAlpha= ['A','B','C','D','E','F','G','H','I','J','K','L','M',
