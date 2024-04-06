@@ -14,17 +14,28 @@ a) Khóa công khai của An: PU = {q, a, YA} với yA =
 b) Ba chọn số k = 589 để mã hóa bản tin M = 442 gửi cho An. Bản mã là (C1, C2) =
 c) Cách An giải bản mã (C1, C2)?
 '''
-import math
+
 from builtins import input
 
 def tinhMod(a, xA, q):
     return pow(a, xA, q) # a^xA mod q
 
-def tinhModNghichDao(a, q):
-    for i in range(1, q):
-        if (a*i) % q == 1:
-            return i
-    return None
+def euclidMoRong(a, n):
+    r1, r2 = n, a
+    x1, x2 = 1, 0
+    y1, y2 = 0, 1
+    while r2 != 0:
+        q = r1 // r2  # Tính thương
+        r1, r2 = r2, r1 - q * r2  # Cập nhật r
+        x1, x2 = x2, x1 - q * x2  # Cập nhật x
+        y1, y2 = y2, y1 - q * y2  # Cập nhật y
+    if r1 == 1:
+        res = y1
+    else: res = None
+    # Nếu res là số âm
+    if res is not None and res < 0:
+        res += n
+    return res
 
 if __name__ == "__main__":
     q = int(input("Nhập q = "))
@@ -49,7 +60,6 @@ if __name__ == "__main__":
     # K = C1^xA mod q
     # M = (C2*K^-1) mod q = (C2 mod q * K^-1 mod q) mod q
     K_giaiMa = tinhMod(C1, xA, q)
-    #M_giai = ((C2 % q) * tinhModNghichDao(K_giaiMa, q)) % q
-    M_giaiMa = tinhMod(tinhMod(C2,1,q) * tinhModNghichDao(K_giaiMa,q), 1, q)
+    M_giaiMa = (C2%q * euclidMoRong(K_giaiMa,q)) % q
     print("An giải bản mã (C1, C2) được K = {}, M = {}".format(K_giaiMa, M_giaiMa))
 

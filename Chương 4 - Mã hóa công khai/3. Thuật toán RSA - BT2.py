@@ -1,17 +1,17 @@
+'''
+Thuật toán RSA - Bài toán 2:
+Input: p, q, e
+Output:
+a) PU = {e, n} =
+b) PR = {d, n} =
+c) Ba mã: C =
+d) An giải mã C: M’ =
+'''
+
 import math
 
 def tinhMod(a, xA, q):
     return pow(a, xA, q) # a^xA mod q
-
-def tinhLuyThuaModulo(a, m, n):
-    res = 1 # Khởi tạo kết quả
-    a = a % n # Chuyển a thành a mod n
-    while m > 0:
-        if m % 2 == 1:
-            res = (res * a) % n  # Nếu m là số lẻ, nhân b với a
-        m = m // 2 # Hạ bậc lũy thừa m
-        a = (a * a) % n  # Cập nhật a
-    return res
 
 def euclidMoRong(a, n):
     r1, r2 = n, a
@@ -30,16 +30,6 @@ def euclidMoRong(a, n):
         res += n
     return res
 
-def ptThuaSoNguyenTo(n):
-    s = set()
-    p = 2
-    while n > 1:
-        while n % p == 0:
-            s.add(p)
-            n //= p
-        p += 1
-    return s
-
 def phiEuler(n):
     res = n #Khởi tạo phi(n) = n
     for i in range(2, int(math.sqrt(n)+1)):
@@ -50,3 +40,28 @@ def phiEuler(n):
     if n > 1:
         res -= res/n
     return int(res)
+
+if __name__ == "__main__":
+    p = int(input("Nhập p = "))
+    q = int(input("Nhập q = "))
+    e = int(input("Nhập e = "))
+    print("=" * 20)
+    n = p * q
+    phi_n = phiEuler(n)
+    d = euclidMoRong(e, phi_n)
+
+    # a) Khóa công khai PU = {e, n}
+    print(f"a) Khóa công khai PU = ({e},{n})")
+    # b) Khóa riêng PR = {d, n}
+    print(f"b) Khóa bí mật PR = ({d}, {n})")
+    print("=" * 20)
+
+    # c) Ba Mã hóa gửi cho An
+    M = int(input("Nhập thông điệp M = "))
+    C = tinhMod(M,e,n)
+    print(f"c) Ba mã hóa thông điệp M = {M} với C = M^e mod n = {C}")
+
+    # d) An giải mã
+    M_giai = tinhMod(C, d, n)
+    print(f"d) An giải mã C: M' = {M_giai}")
+
