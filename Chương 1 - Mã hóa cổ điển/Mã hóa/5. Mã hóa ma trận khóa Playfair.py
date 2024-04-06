@@ -5,25 +5,25 @@ Key: K = BEAUTY
 Tìm Output: C =
 '''
 
-def create_key_matrix(key):
+def create_key_matrix(K):
     matrix = []
     # Loại bỏ chữ cái trùng và tạo ma trận từ khóa
-    key = "".join(sorted(set(key), key=key.index))
+    K = "".join(sorted(set(K), key=K.index))
     alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ"  # Bỏ qua chữ 'J'
     for char in key + alphabet:
         if char not in matrix:
             matrix.append(char)
     return [matrix[i:i+5] for i in range(0, 25, 5)]
 
-def prepare_text(text):
+def prepare_text(M):
     prepared_text = ""
     i = 0
-    while i < len(text):
-        prepared_text += text[i]
-        if i+1 < len(text) and text[i] == text[i+1]:
+    while i < len(M):
+        prepared_text += M[i]
+        if i+1 < len(M) and M[i] == M[i+1]:
             prepared_text += 'X'
-        if i+1 < len(text):
-            prepared_text += text[i+1]
+        if i+1 < len(M):
+            prepared_text += M[i+1]
         i += 2
     if len(prepared_text) % 2 != 0:
         prepared_text += 'X'
@@ -53,9 +53,9 @@ def encode(text, key):
         encoded_text += encode_pair(text[i], text[i+1], matrix)
     return encoded_text
 
-# Mã hóa
-key = "BEAUTY"
-text = "BEAUTYISONLYSK"
-encoded_text = encode(text, key)
-print("Encoded text:", encoded_text)
+if __name__ == "__main__":
+    K = "BEAUTY"
+    M = "BEAUTYISONLYSK"
+    M_mahoa = encode(M, K)
+    print("Encoded text:", M_mahoa)
 
