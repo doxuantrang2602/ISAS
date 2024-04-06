@@ -50,3 +50,9 @@ def phiEuler(n):
     if n > 1:
         res -= res/n
     return int(res)
+
+def modNghichDao(a, q):
+    for i in range(1, q):
+        if (a * i) % q == 1:
+            return i
+    return None
