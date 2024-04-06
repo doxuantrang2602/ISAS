@@ -18,9 +18,10 @@ def giaiMaVigenere(C, K):
         m_index = (c_index - k_index) % 26  # Tính chỉ số mới cho kí tự giải mã
         M_giai.append(lstAlpha[m_index])  # Thêm kí tự giải mã vào bản rõ
         print(f'| {c:<5} | {k:<5} | {c_index:<8} | {k_index:<8} | {m_index:<8} | {lstAlpha[m_index]} |')
-    print("Bản rõ sau khi giải mã Vigenere lặp khóa: ", ''.join(M_giai), sep="")
+    print("======================================================")
+    print("Bản rõ sau khi giải mã Vigenere lặp khóa là: ", ''.join(M_giai), sep="")
 
 if __name__ == "__main__":
-    C = "HVZRQFXSMALYKCI".upper()
-    K = "WHENIN".upper()
+    C = "HVZRQFXSMALYKCI"
+    K = "WHENIN"
     giaiMaVigenere(C, K)

@@ -1,7 +1,7 @@
 '''
 Input: M = LOVEISBLINDLOVE
 Key: K = WHENIN
-=> Tìm Output: C =
+=> Tìm Output: C = HVZRQFMZDRLDPGM
 '''
 if __name__ == "__main__":
     lstAlpha=['A','B','C','D','E','F','G','H','I','J','K','L','M',
@@ -25,5 +25,5 @@ if __name__ == "__main__":
             if b == c:
                 C.append(a)
         print(f'| {m:<5} | {k:<5} | {Alpha[m]:<8} | {Alpha[k]:<8} | {c:<8} | {lstAlpha[c]} |')
-    print("+> Kết của của Vigenere AutoKey: ",''.join(C), sep="")
+    print("=> Kết của của Vigenere AutoKey: ",''.join(C), sep="")
 
