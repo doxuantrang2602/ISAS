@@ -1,3 +1,19 @@
+'''
+Sinh khóa
+1. Viết hàm K1 = PC1(K) thực hiện hoán vị PC1
+Input: K - chuỗi số 64 bit
+Output: K1 – chuỗi số 56 bit là hoán vị của K theo ma trận PC1
+2. Viết hàm SPLIT_KEY(K1, C, D) tách chuỗi số 56 bit (K1) thành 2 nửa 28 bit trái (C) và phải (D);
+Input: K1 – chuỗi số 56 bit
+Output: C, D – chuỗi số 28 bit
+3. Viết hàm ShiftLeft(x, s) dịch vòng trái s bit đối với chuỗi số 28 bit (x)
+Input: x – chuỗi số 28 bit, s – số nguyên dương <28
+Output: x – chuỗi số 28 bit đã dịch vòng trái s bit
+4. Viết hàm Ks = PC2(C, D, s) thực hiện hoán vị PC2
+Input: C, D - chuỗi số 28 bit, s – số nguyên dương < 28
+Output: Ks – chuỗi số 48 bit là hoán vị của C, D theo ma trận PC2.
+'''
+
 PC1_table = [57, 49, 41, 33, 25, 17, 9, 1, 58, 50, 42, 34, 26, 18,
            10, 2, 59, 51, 43, 35, 27, 19, 11, 3, 60, 52, 44, 36,
            63, 55, 47, 39, 31, 23, 15, 7, 62, 54, 46, 38, 30, 22,
@@ -25,16 +41,16 @@ def hexToBin(s):
 def PC1(K):
     K1 = ""
     for x in PC1_table:
-        K1+= K[x-1]
+        K1 += K[x-1]
     return K1
 
-def SPLIT_KEY(K):
-    m= len(K)//2
-    C= K[:m]
-    D=K[m:]
-    return C,D
+def SPLIT_KEY(K1):
+    m = len(K1) // 2
+    C = K1[:m]
+    D = K1[m:]
+    return C, D
 
-def Shift_Left(x,s): #x- chuỗi, s- số bit dịch
+def ShiftLeft(x, s):
     bitRotated = shift[s]
     return x[bitRotated:] + x[:bitRotated]
 
@@ -53,8 +69,8 @@ if __name__ == '__main__':
     C,D= SPLIT_KEY(K1)
     print("C= ",C)
     print("D= ",D)
-    C=Shift_Left(C, 1)
-    D=Shift_Left(D, 1)
+    C=ShiftLeft(C, 1)
+    D=ShiftLeft(D, 1)
     print("Dịch vòng trái 1 bit của C= ",C)
     print("Dịch vòng trái 1 bit của D= ",D)
     Ks= PC2(C,D)

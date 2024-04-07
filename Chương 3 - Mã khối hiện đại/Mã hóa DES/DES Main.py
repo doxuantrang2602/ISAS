@@ -1,10 +1,13 @@
-from  DES_MaHoa import *
-from DES_SinhKhoa import *
 '''
-K = 03756CD378146EC7
-M = 66581B2AE5B0BD6D
+Mã hóa DES – xây dựng hàm y = DES (x, k) thực hiện mã hóa theo thuật toán DES
+input: x, k – chuỗi số 64 bit
+Output: y – chuỗi số 64 bít được mã hóa từ x theo thuật toán DES với khóa k
 '''
-IP1_table = [
+
+from DES_MaHoa import *
+from DES_MaHoa import *
+
+FP_table = [
     40, 8, 48, 16, 56, 24, 64, 32,
     39, 7, 47, 15, 55, 23, 63, 31,
     38, 6, 46, 14, 54, 22, 62, 30,
@@ -14,61 +17,59 @@ IP1_table = [
     34, 2, 42, 10, 50, 18, 58, 26,
     33, 1, 41, 9, 49, 17, 57, 25
 ]
-def IP_1(x):
-    C=[]
-    for i in IP1_table:
-        C.append(x[i-1])
-    return ''.join(C)
-def DES(x,k):
-    ### Sinh Khoá
-    # chuyển k về hệ 2
-    k= hexToBin(k)
-    #hoán vị PC1
-    pc1= PC1(k)
-    C0,D0= SPLIT_KEY(pc1)
-    C,D=[],[]
-    C.append(C0)
-    D.append(D0)
-    # dịch vòng
-    bit_rotated = [1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1]
-    for i,j in enumerate(bit_rotated):
-        C.append(Shift_Left(C[i],j))
-        D.append(Shift_Left(D[i], j))
-    C= C[1:]
-    D=D[1:]
-    # PC2 -> 16 khóa
-    K = []
-    for i in range(0, 16):
-        K.append(PC2(C[i], D[i]))
-    ### Mã hóa
-    # hoán vị IP
-    x= hexToBin(x)
-    ip= IP(x)
-    L0, R0 = SPLIT_KEY(ip)
-    L, R = [], []
-    L.append(L0)
-    R.append(R0)
-    ## 16 Vòng lặp (Mã hóa)
-    for i in range(16):
-        er = E(R[i])
-        xor = XOR(er, K[i])
-        s_box = SUB(xor)
-        f = P(s_box)
-        kq = XOR(L[i], f)
-        L.append(R[i])
-        R.append(kq)
-    # 32bit swap
-    M = R[-1] + L[-1]
-    #hoán vị IP_1
-    ip_1 = IP_1(M)
-    # chuyển hệ 2 -> hệ 16
-    bin_to_hex = hex(int(ip_1, 2))
-    C=bin_to_hex[2:].upper()
 
-    return C
+def FP(x):
+    res = ""
+    for i in FP_table:
+        res += x[i-1]
+    return res
+
+def DES(x, k):
+    K = hexToBin(k)
+    M = hexToBin(x)
+    K1 = PC1(K)
+    C, D = SPLIT_KEY(K1)
+    Ks = []
+    for i in range(16):
+        C = ShiftLeft(C, shift[i])
+        D = ShiftLeft(D, shift[i])
+        Ks.append(PC2(C, D))
+        print(f"K{i + 1}: {Ks[i]}")
+    IP_M = IP(M)
+    L0, R0 = SPLIT_KEY(IP_M)
+    print(f"Round 0: L = {L0}, R0 = {R0}")
+    for i in range(16):
+        temp = R0
+        R1 = E(R0)
+        A = XOR(R1, Ks[i])
+        B = SUB(A)
+        F = P(B)
+        R0 = XOR(L0, F)
+        L0 = temp
+        print(f"Round {i+1}: L = {L0}, R = {R0}")
+    y = FP(R0 + L0)
+    return y
+
+def binToHex(s):
+    strHex = {
+        '0000': '0', '0001': '1', '0010': '2', '0011': '3',
+        '0100': '4', '0101': '5', '0110': '6', '0111': '7',
+        '1000': '8', '1001': '9', '1010': 'A', '1011': 'B',
+        '1100': 'C', '1101': 'D', '1110': 'E', '1111': 'F'
+    }
+    hex = ""
+    for i in range(0, len(s), 4):
+        hex += strHex[s[i:i+4]]
+    return hex
 
 if __name__ == '__main__':
-    k= input("Nhập k: ")
-    x=input("Nhập x: ")
-    print("Kết quả: ",DES(x,k))
+    K = "03756CD378146EC7"
+    M = "66581B2AE5B0BD6D"
+    resDes = DES(M, K)
+    print(f"=> Kết quả mã hóa Des: {resDes}")
+    print(f"=> Mã Hex: {binToHex(resDes)}")
 
+'''
+K = 03756CD378146EC7
+M = 66581B2AE5B0BD6D
+'''
