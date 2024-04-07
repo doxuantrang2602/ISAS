@@ -20,14 +20,14 @@ def mix_columns(s):
     return result
 
 # Your matrix
-matrix = [
+maTran = [
     [0x79, 0x4E, 0xAA, 0x02],
     [0x6F, 0x12, 0xA6, 0x18],
     [0x19, 0x28, 0x73, 0x86],
     [0xBF, 0xC0, 0xD0, 0x15]
 ]
 
-mixed_matrix = mix_columns(matrix)
+mixed_matrix = mix_columns(maTran)
 
 for row in mixed_matrix:
     print(' '.join([format(cell, '02X') for cell in row]))

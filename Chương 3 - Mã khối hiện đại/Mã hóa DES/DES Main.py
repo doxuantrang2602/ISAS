@@ -31,25 +31,24 @@ def DES(x, k):
     C, D = SPLIT_KEY(K1)
     Ks = []
     for i in range(16):
-        C = ShiftLeft(C, shift[i])
-        D = ShiftLeft(D, shift[i])
-        Ks.append(PC2(C, D))
-        print(f"K{i + 1}: {Ks[i]}")
+       C = ShiftLeft(C, shift[i])
+       D = ShiftLeft(D, shift[i])
+       Ks.append(PC2(C,D))
+       print(f"Khóa {i+1} = {Ks[i]}")
     IP_M = IP(M)
     L0, R0 = SPLIT_KEY(IP_M)
-    print(f"Round 0: L = {L0}, R0 = {R0}")
+    print(f"Vòng 0: L = {L0}, R = {R0}")
     for i in range(16):
         temp = R0
-        R1 = E(R0)
-        A = XOR(R1, Ks[i])
+        ER0 = E(R0)
+        A = XOR(ER0, Ks[i])
         B = SUB(A)
         F = P(B)
-        R0 = XOR(L0, F)
+        R0 = XOR(F, L0)
         L0 = temp
-        print(f"Round {i+1}: L = {L0}, R = {R0}")
-    y = FP(R0 + L0)
+        print(f"Vòng {i+1}: L = {L0}, R = {R0}")
+    y = FP(R0+L0)
     return y
-
 def binToHex(s):
     strHex = {
         '0000': '0', '0001': '1', '0010': '2', '0011': '3',
