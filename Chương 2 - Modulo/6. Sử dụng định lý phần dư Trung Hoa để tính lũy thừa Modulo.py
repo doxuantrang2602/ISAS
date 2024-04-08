@@ -64,8 +64,8 @@ def dinhLyPhanDuTrungHoa(a, k, n):
     A %= n
     print("Tính A = Σ(ai * ci * Mi) mod M:")
     print("A =", A)
-
     return A
+
 if __name__ == "__main__":
     a = 113
     k = 58
