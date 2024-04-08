@@ -8,7 +8,6 @@ def euclidMoRong(a, n):
     r1, r2 = n, a
     x1, x2 = 1, 0
     y1, y2 = 0, 1
-
     while r2 != 0:
         q = r1 // r2  # Tính thương
         r1, r2 = r2, r1 - q * r2  # Cập nhật r
@@ -35,16 +34,12 @@ def ptThuaSoNguyenTo(n):
 def dinhLyPhanDuTrungHoa(a, k, n):
     print("Input:")
     print(f"a = {a}; k = {k}; n = {n}")
-
     # Bước 1: Phân tích n thành tích của các số nguyên tố cùng nhau từng đôi một
     factors = ptThuaSoNguyenTo(n)
-
     print("Phân tích n thành tích các số nguyên tố cùng nhau:")
     print("m1, m2, ..., mk =", factors)
-
     # Bước 2: Tính M
     M = n  # M là tích của tất cả các m_i, ở đây chính là n
-
     # Bước 3: Tính Mi = M / mi cho mỗi i và ci = Mi^(-1) mod mi
     print("Tính Mi và ci:")
     M_values = []
@@ -55,22 +50,18 @@ def dinhLyPhanDuTrungHoa(a, k, n):
         M_values.append(Mi)
         c_values.append(ci)
         print(f"M{i} = {Mi}, c{i} = {ci}")
-
     # Bước 4: Tính ai = a^k mod mi cho mỗi i
     a_values = []
     for mi in factors:
         a_values.append(pow(a, k, mi))
-
     print("Tính ai = a^k mod mi:")
     for i, x in enumerate(a_values,1):
         print(f"a{i} = {x}")
-
     # Bước 5: Tính A = Σ(ai * ci * Mi) mod M
     A = 0
     for i in range(len(factors)):
         A += a_values[i] * c_values[i] * M_values[i]
     A %= n
-
     print("Tính A = Σ(ai * ci * Mi) mod M:")
     print("A =", A)
 

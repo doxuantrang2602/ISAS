@@ -29,12 +29,12 @@ LẶP LẠI từ Bài 2 đến Bài 5 để tạo các khóa K2, K3, ..., K1
 M = 39400A33DB86771F578E208998CDB8A4
 K = A2E7F3E9F4EC8BB93217B94C5FD982CD
 '''
-Rcon_expanded = [
+Rcon = [
     '01000000', '02000000', '04000000', '08000000',
     '10000000', '20000000', '40000000', '80000000',
     '1B000000', '36000000'
 ]
-s_box = {
+Sbox = {
     '00': '63', '01': '7C', '02': '77', '03': '7B', '04': 'F2', '05': '6B', '06': '6F', '07': 'C5', '08': '30',
     '09': '01', '0A': '67', '0B': '2B', '0C': 'FE', '0D': 'D7', '0E': 'AB', '0F': '76',
     '10': 'CA', '11': '82', '12': 'C9', '13': '7D', '14': 'FA', '15': '59', '16': '47', '17': 'F0', '18': 'AD',
@@ -68,56 +68,48 @@ s_box = {
     'F0': '8C', 'F1': 'A1', 'F2': '89', 'F3': '0D', 'F4': 'BF', 'F5': 'E6', 'F6': '42', 'F7': '68', 'F8': '41',
     'F9': '99', 'FA': '2D', 'FB': '0F', 'FC': 'B0', 'FD': '54', 'FE': 'BB', 'FF': '16'
 }
-def split_key(K):
+
+def SPLIT_KEY(K):
     w0 = K[:8]
     w1 = K[8:16]
     w2 = K[16:24]
-    w3 = K[24:]
+    w3 = K[24:32]
     return w0, w1, w2, w3
 
 def RotWord(word):
     return word[2:] + word[:2]
 
 def SubWord(word):
-    sw = ""
+    res = ""
     for i in range(0, len(word), 2):
-        sw += s_box[word[i:i+2]]
-    return sw
+        res += Sbox[word[i:i+2]]
+    return res
 
-def XORbit(word1, word2):
-    result = ""
+def XOR(word1, word2):
+    res = ""
     for i in range(0, len(word1), 2):
-        # Chuyển từng cặp ký tự hex thành số, thực hiện XOR và chuyển kết quả trở lại dạng hex
-        xor_result = hex(int(word1[i:i+2], 16) ^ int(word2[i:i+2], 16))[2:].zfill(2)
-        result += xor_result
-    return result.upper()
+        res += hex(int(word1[i:i+2], 16) ^ int(word2[i:i+2], 16))[2:].zfill(2)
+    return res.upper()
 
-def KeyExpansion(K):
-    keys = [K]  # Lưu khóa ban đầu
-    w = split_key(K)  # Chia khóa K thành 4 từ w0, w1, w2, w3
-
-    # Lặp qua 10 vòng để sinh ra 10 khóa con
+def keyExpansion(K):
+    keys = [K]
+    w = SPLIT_KEY(K)
     for i in range(10):
-        # Áp dụng các bước sinh khóa
         rw = RotWord(w[3])
         sw = SubWord(rw)
-        xcsw = XORbit(sw, Rcon_expanded[i])
-        w4 = XORbit(xcsw, w[0])
-        w5 = XORbit(w4, w[1])
-        w6 = XORbit(w5, w[2])
-        w7 = XORbit(w6, w[3])
-
-        # Cập nhật các từ cho vòng lặp tiếp theo
+        xcsw = XOR(sw, Rcon[i])
+        w4 = XOR(xcsw, w[0])
+        w5 = XOR(w4, w[1])
+        w6 = XOR(w5, w[2])
+        w7 = XOR(w6, w[3])
         w = (w4, w5, w6, w7)
-
-        # Nối các từ lại để tạo thành khóa mới và thêm vào danh sách khóa
-        new_key = w4 + w5 + w6 + w7
-        keys.append(new_key)
-
+        newKey = w4 + w5 + w6 + w7
+        keys.append(newKey)
     return keys
 
 if __name__ == "__main__":
     K = "A2E7F3E9F4EC8BB93217B94C5FD982CD"
-    expanded_keys = KeyExpansion(K)
-    for i, key in enumerate(expanded_keys):
-        print(f"Khóa K{i}: {key}")
+    K_moRong = keyExpansion(K)
+    for i, key in enumerate(K_moRong):
+        print(f"Khóa K{i} = {key}")
+
