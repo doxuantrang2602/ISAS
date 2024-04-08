@@ -33,8 +33,8 @@ def AES(x, k):
     return resHex
 
 if __name__ == "__main__":
-    M = "39400A33DB86771F578E208998CDB8A4"
-    K = "A2E7F3E9F4EC8BB93217B94C5FD982CD"
+    M = "0123456789ABCDEFFEDCBA9876543210"
+    K = "0F1571C947D9E8590CB7ADD6AF7F6798"
     resAES = AES(M, K)
     print(f"Kết quả mã hóa AES : {resAES}")
 

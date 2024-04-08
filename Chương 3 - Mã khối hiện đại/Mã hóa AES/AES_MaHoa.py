@@ -65,16 +65,15 @@ def SHIFTROW(state):
     return state
 
 def nhanMaTran(a, b):
-    res = 0
-    while b:
-        if b & 1:
-            res ^= a
+    if b == 0x01:
+        return a
+    elif b == 0x02:
         if a & 0x80:
-            a = (a << 1) ^ 0x11B
+            return ((a << 1) & 0xFF) ^ 0x1B
         else:
-            a <<= 1
-        b >>= 1
-    return res
+            return (a << 1) & 0xFF
+    elif b == 0x03:
+        return nhanMaTran(a, 0x02) ^ a
 
 def MIXCOLUMN(state):
     maTranMix = [
@@ -93,7 +92,7 @@ def MIXCOLUMN(state):
         for j in range(4):
             res = 0
             for k in range(4):
-                res ^= nhanMaTran(maTranMix[i][k], int(state[k][j], 16))
+                res ^= nhanMaTran(int(state[k][j], 16), maTranMix[i][k])
             maTranKq[i][j] = format(res, '02x').upper()
     return maTranKq
 
