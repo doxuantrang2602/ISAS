@@ -21,106 +21,101 @@ Ki (kết quả bài 5) =
 Output: state = AddRoundKey (state, Ki)
 '''
 from AES_SinhKhoa import *
-def hex_to_matrix(hex_string):
-    # Chuyển đổi chuỗi hex thành ma trận 4x4
-    matrix = [['00' for _ in range(4)] for _ in range(4)]
+
+def hexToMatrix(hexStr):
+    maTran = []
+    for _ in range(4):
+        hang = []
+        for _ in range(4):
+            hang.append('00')
+        maTran.append(hang)
     for i in range(4):
         for j in range(4):
-            matrix[j][i] = hex_string[i*8 + j*2 : i*8 + j*2 + 2]
-    return matrix
+            maTran[j][i] = hexStr[i*8 + j*2 : i*8 + j*2 + 2]
+    return maTran
 
-def XOR_bytes(byte1, byte2):
-    # Thực hiện phép XOR giữa 2 byte
+def XORBYTE(byte1, byte2):
     return hex(int(byte1, 16) ^ int(byte2, 16))[2:].zfill(2).upper()
 
-def AddRoundKey(M, K):
-    # Chuyển đổi M và K thành ma trận 4x4
-    M_matrix = hex_to_matrix(M)
-    K_matrix = hex_to_matrix(K)
-    # Thực hiện phép XOR giữa từng byte của M và K
-    state = [['00' for _ in range(4)] for _ in range(4)]
+def ADDROUNDKEY(M, K):
+    maTranM = hexToMatrix(M)
+    maTranK = hexToMatrix(K)
+    state = []
+    for _ in range(4):
+        row = []
+        for _ in range(4):
+            row.append('00')
+        state.append(row)
     for i in range(4):
         for j in range(4):
-            state[i][j] = XOR_bytes(M_matrix[i][j], K_matrix[i][j])
-
+            state[i][j] = XORBYTE(maTranM[i][j], maTranK[i][j])
     return state
 
-def SubByte(state):
+def SUBBYTE(state):
     for i in range(4):
         for j in range(4):
             byte = state[i][j]
             state[i][j] = Sbox[byte.upper()]
     return state
 
-def ShiftRows(state):
-    # Dịch vòng trái hàng thứ hai một byte
+def SHIFTROW(state):
     state[1] = state[1][1:] + state[1][:1]
-    # Dịch vòng trái hàng thứ ba hai byte
     state[2] = state[2][2:] + state[2][:2]
-    # Dịch vòng trái hàng thứ tư ba byte
     state[3] = state[3][3:] + state[3][:3]
     return state
 
+def nhanMaTran(a, b):
+    res = 0
+    while b:
+        if b & 1:
+            res ^= a
+        if a & 0x80:
+            a = (a << 1) ^ 0x11B
+        else:
+            a <<= 1
+        b >>= 1
+    return res
 
-def MixColumns(state):
-    # Ma trận thực hiện phép nhân
-    mul_matrix = [
+def MIXCOLUMN(state):
+    maTranMix = [
         [0x02, 0x03, 0x01, 0x01],
         [0x01, 0x02, 0x03, 0x01],
         [0x01, 0x01, 0x02, 0x03],
         [0x03, 0x01, 0x01, 0x02]
     ]
-
-    # Tạo một ma trận tạm thời để lưu trữ kết quả
-    result_matrix = [['00' for _ in range(4)] for _ in range(4)]
-
-    # Thực hiện phép nhân với ma trận
+    maTranKq = []
+    for _ in range(4):
+        row = []
+        for _ in range(4):
+            row.append('00')
+        maTranKq.append(row)
     for i in range(4):
         for j in range(4):
-            result = 0
+            res = 0
             for k in range(4):
-                result ^= GF_multiply(mul_matrix[i][k], int(state[k][j], 16))
-            result_matrix[i][j] = format(result, '02x').upper()
-
-    return result_matrix
-
-
-def GF_multiply(a, b):
-    # Thực hiện phép nhân trong trường Galois
-    result = 0
-    while b:
-        if b & 1:
-            result ^= a
-        if a & 0x80:
-            a = (a << 1) ^ 0x11B  # 0x11B là xtime(0x80)
-        else:
-            a <<= 1
-        b >>= 1
-    return result
-
+                res ^= nhanMaTran(maTranMix[i][k], int(state[k][j], 16))
+            maTranKq[i][j] = format(res, '02x').upper()
+    return maTranKq
 
 if __name__ == "__main__":
     M = "39400A33DB86771F578E208998CDB8A4"
     K = "A2E7F3E9F4EC8BB93217B94C5FD982CD"
-    initial_state  = AddRoundKey(M, K)
+    stateADD = ADDROUNDKEY(M, K)
     print("Kết quả của AddRoundKey:")
-    for row in initial_state :
+    for row in stateADD:
         print(*row)
 
-    state_after_subbyte = SubByte(initial_state)
+    stateSUB = SUBBYTE(stateADD)
     print("Kết quả của SubByte:")
-    for row in state_after_subbyte:
+    for row in stateSUB:
         print(' '.join(row))
 
-    state_after_shiftrows = ShiftRows(state_after_subbyte)
+    stateSHIFT = SHIFTROW(stateSUB)
     print("Kết quả của ShiftRows:")
-    for row in state_after_shiftrows:
+    for row in stateSHIFT:
         print(' '.join(row))
 
-    state_after_mixcolumns = MixColumns(state_after_shiftrows)
+    stateMIX = MIXCOLUMN(stateSHIFT)
     print("Kết quả của MixColumns:")
-    for row in state_after_mixcolumns:
+    for row in stateMIX:
         print(' '.join(row))
-
-
-

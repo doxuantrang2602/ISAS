@@ -76,32 +76,36 @@ def SPLIT_KEY(K):
     w3 = K[24:32]
     return w0, w1, w2, w3
 
-def RotWord(word):
+def ROTWORD(word):
     return word[2:] + word[:2]
 
-def SubWord(word):
+def SUBWORD(word):
     res = ""
     for i in range(0, len(word), 2):
         res += Sbox[word[i:i+2]]
     return res
 
-def XOR(word1, word2):
+def XORBIT(word1, word2):
     res = ""
     for i in range(0, len(word1), 2):
-        res += hex(int(word1[i:i+2], 16) ^ int(word2[i:i+2], 16))[2:].zfill(2)
+        res += hex(int(word1[i:i+2],16) ^ int(word2[i:i+2], 16))[2:].zfill(2);
     return res.upper()
 
 def keyExpansion(K):
     keys = [K]
     w = SPLIT_KEY(K)
     for i in range(10):
-        rw = RotWord(w[3])
-        sw = SubWord(rw)
-        xcsw = XOR(sw, Rcon[i])
-        w4 = XOR(xcsw, w[0])
-        w5 = XOR(w4, w[1])
-        w6 = XOR(w5, w[2])
-        w7 = XOR(w6, w[3])
+        w0 = w[0]
+        w1 = w[1]
+        w2 = w[2]
+        w3 = w[3]
+        rw = ROTWORD(w3)
+        sw = SUBWORD(rw)
+        xcsw = XORBIT(sw, Rcon[i])
+        w4 = XORBIT(xcsw, w0)
+        w5 = XORBIT(w4, w1)
+        w6 = XORBIT(w5, w2)
+        w7 = XORBIT(w6, w3)
         w = (w4, w5, w6, w7)
         newKey = w4 + w5 + w6 + w7
         keys.append(newKey)
@@ -110,6 +114,5 @@ def keyExpansion(K):
 if __name__ == "__main__":
     K = "A2E7F3E9F4EC8BB93217B94C5FD982CD"
     K_moRong = keyExpansion(K)
-    for i, key in enumerate(K_moRong):
-        print(f"Khóa K{i} = {key}")
-
+    for i,x in enumerate(K_moRong):
+        print(f"Khóa K{i} = {x}")
