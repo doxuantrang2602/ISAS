@@ -3,27 +3,6 @@ Sinh khóa
 Viết hàm KeyExpansion mở rộng khóa từ khóa K (16 byte) thành 176 byte (11 x 16 byte)
 Input: K mảng 16 byte
 Output: K+ mảng 176 byte
-
-PHẦN 1: SINH 10 KHÓA Ki từ khóa K (input), i = 1, 2, ..., 10. (Mục 5.4)
-1. Chia khóa K (128 bit) thành 4 word (32 bit)
-Input: K (input) = A2E7F3E9F4EC8BB93217B94C5FD982CD,
-Output: w0 = , w1 = , w2 = , w3 = ,
-2. Dịch vòng trái 1 byte đối với w3 (32 bit)
-Input: w3 (kết quả bài 1) =
-Output: rw = RotWord(w3) =
-3. Thay thế từng byte trong rw bằng bảng S-box SubWord
-Input: rw (kết quả bài 2) = ; Sbox (tài liệu mục 5.3, Table 5.2, trang 157)
-Output: sw = SubWord(rw) =
-4. sw XORbit với Rcon[j]
-Input: sw (kết quả bài 3) = ; RC[i] (xem tài liệu mục 5.4 Key Expansion)
-Output: xcsw = XorRcon(sw, RC[i]) =
-5. Tính khóa K1 = (w4, w5, w6, w7)
-Input: xcsw (kết quả bài 4) = ; w0, w1, w2, w3 (kết quả bài 1);
-Output: w4 = XORbit(xcsw, w0) =
-w5 = XORbit(w4, w1) =
-w6 = XORbit(w5, w2) =
-w7 = XORbit(w6, w3) =
-LẶP LẠI từ Bài 2 đến Bài 5 để tạo các khóa K2, K3, ..., K1
 '''
 '''
 M = 39400A33DB86771F578E208998CDB8A4

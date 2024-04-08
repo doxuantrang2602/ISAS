@@ -1,24 +1,17 @@
 '''
-PHẦN 2: MÃ HÓA
-6. Tính kết quả AddRoundKey
-Input: M (input) = 39400A33DB86771F578E208998CDB8A4,
-       K (input) = A2E7F3E9F4EC8BB93217B94C5FD982CD
-Output: state = AddRoundKey(M, K)
-======================== VÒNG LẶP THỨ i, i = 1, 2, ..., 9 ===========
-7. Thay thế từng byte trong state bằng bảng S-box SubByte
-Input: state (kết quả bài 6 cho lần lặp 1 hoặc kết quả bài 10 cho lần lặp kế tiếp) = ,
-    Sbox
-Output: state = SubByte (state)
-8. Dịch vòng trái các byte trong state ShiftRows
-Input: state (kết quả bài 7) = ,
-Output: state = ShiftRows (state)
-9. Trộn các byte trong state MixColumns
-Input: state (kết quả bài 8) = ,
-Output: state = MixColumns (state)
-10. Dịch vòng trái các byte trong state AddRoundKey
-Input: state (kết quả bài 9) = ,
-Ki (kết quả bài 5) =
-Output: state = AddRoundKey (state, Ki)
+Mã hóa
+1. Viết hàm y = SUBBYTE(state) thực hiện việc thế byte.
+Input: state – ma trận 4x4 = 16 byte
+Output: y – ma trận 4x4 = 16 byte byte là kết quả thay thế byte x theo bảng S-box
+2. Viết hàm y = SHIFTROW(state) thực hiện việc dịch hàng.
+Input: state – ma trận 4x4 = 16 byte
+Output: y – ma trận 4x4 = 16 byte byte là kết quả dịch hàng.
+3. Viết hàm y = MIXCOLUMN(state) thực hiện việc nhân ma trận.
+Input: state – ma trận 4x4 = 16 byte
+Output: y – ma trận 4x4 = 16 byte byte là kết quả mixcolumn của state
+4. Viết hàm y = ADDROUNDKEY(state, K) thực hiện việc nhân ma trận.
+Input: state, K – ma trận 4x4 = 16 byte
+Output: y – ma trận 4x4 = 16 byte byte là kết quả AddRoundKey của state và khóa K
 '''
 from AES_SinhKhoa import *
 
