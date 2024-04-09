@@ -23,7 +23,9 @@ def AES(x, k):
     for i in range(1,10):
         state = SUBBYTE(state)
         state = SHIFTROW(state)
+        state = changeState(state)
         state = MIXCOLUMN(state)
+        state = changeState(state)
         state = ADDROUNDKEY(maTrixToHex(state), keys[i])
     # Vòng cuối cùng
     state = SUBBYTE(state)

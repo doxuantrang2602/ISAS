@@ -57,6 +57,15 @@ def SHIFTROW(state):
     state[3] = state[3][3:] + state[3][:3]
     return state
 
+def changeState(state):
+    newState = []
+    for i in range(4):
+        rc = []
+        for j in range(4):
+            rc.append(state[j][i])
+        newState.append(rc)
+    return newState
+
 def nhanMaTran(a, b):
     if b == 0x01:
         return a
@@ -77,17 +86,18 @@ def MIXCOLUMN(state):
     ]
     maTranKq = []
     for _ in range(4):
-        row = []
-        for _ in range(4):
-            row.append('00')
-        maTranKq.append(row)
+        maTranKq.append(['00']*4)
+
     for i in range(4):
         for j in range(4):
             res = 0
             for k in range(4):
-                res ^= nhanMaTran(int(state[k][j], 16), maTranMix[i][k])
-            maTranKq[i][j] = format(res, '02x').upper()
+                giaTriState = int(state[j][k], 16)
+                giaTriMix = maTranMix[i][k]
+                res ^= nhanMaTran(giaTriState, giaTriMix)
+            maTranKq[j][i] = format(res, '02x').upper()
     return maTranKq
+
 
 if __name__ == "__main__":
     M = "39400A33DB86771F578E208998CDB8A4"
@@ -107,7 +117,10 @@ if __name__ == "__main__":
     for row in stateSHIFT:
         print(' '.join(row))
 
-    stateMIX = MIXCOLUMN(stateSHIFT)
+    stateMIX = changeState(stateSHIFT)
+    stateMIX = MIXCOLUMN(stateMIX)
     print("Kết quả của MixColumns:")
-    for row in stateMIX:
-        print(' '.join(row))
+    for i in range(4):
+        for j in range(4):
+            print(stateMIX[j][i], end=' ')
+        print()
