@@ -85,17 +85,19 @@ def MIXCOLUMN(state):
         [0x03, 0x01, 0x01, 0x02]
     ]
     maTranKq = []
-    for _ in range(4):
-        maTranKq.append(['00']*4)
-
+    for i in range(4):
+        rc = []
+        for j in range(4):
+            rc.append('00')
+        maTranKq.append(rc)
     for i in range(4):
         for j in range(4):
             res = 0
             for k in range(4):
-                giaTriState = int(state[j][k], 16)
-                giaTriMix = maTranMix[i][k]
+                giaTriState = int(state[i][k], 16)
+                giaTriMix = maTranMix[j][k]
                 res ^= nhanMaTran(giaTriState, giaTriMix)
-            maTranKq[j][i] = format(res, '02x').upper()
+            maTranKq[i][j] = format(res, '02x').upper()
     return maTranKq
 
 
