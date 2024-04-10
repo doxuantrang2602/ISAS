@@ -51,6 +51,13 @@ def phiEuler(n):
         res -= res/n
     return int(res)
 
+def phi(n):
+    res = 0
+    for i in range(1, n):
+        if math.gcd(i, n) == 1:
+            res += 1
+    return res
+
 def modNghichDao(a, q):
     for i in range(1, q):
         if (a * i) % q == 1:
