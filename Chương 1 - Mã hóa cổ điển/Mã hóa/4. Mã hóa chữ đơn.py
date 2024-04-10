@@ -4,16 +4,14 @@ Key: K = PEINVRXLASWCBYHMOFGKZUQDTJ
 Tìm Output: C = VUVFTHYVLPGKLVAF
 '''
 if __name__ == "__main__":
-    lstApha= ['A','B','C','D','E','F','G','H','I','J','K','L','M',
-            'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-    M = list(input("Nhập M = "))
-    K = list(input("Nhập K = "))
-    Alpha = {}
-    for i in range(0,26):
-        Alpha[lstApha[i]] = i # Ánh xạ chỉ số cho mỗi chữ cái 'A':0, 'B':1, ..., 'Z':25)
-    C = []
+    dicAlpha = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6,
+                'H': 7, 'I': 8, 'J': 9, 'K': 10, 'L': 11, 'M': 12, 'N': 13,
+                'O': 14, 'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19,
+                'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24, 'Z': 25}
+    M = "EVERYONEHASTHEIR"
+    K = "PEINVRXLASWCBYHMOFGKZUQDTJ"
+    C = ""
     for m in M:
-        if m in Alpha:
-            i = Alpha[m] # tìm vị trí i của kí tự m trong Alpha
-            C.append(K[i]) # Tìm kí tự K[i] để thêm vào Output C
-    print("=> Output C = ",''.join(C), sep="")
+        i = dicAlpha[m]
+        C += K[i]
+    print(f"Output C = {C}")
