@@ -4,27 +4,22 @@ Key: K = WHENIN
 Tìm Output: C = HVZRQFXSMALYKCI
 '''
 if __name__ == '__main__':
-    lstAlpha= ['A','B','C','D','E','F','G','H','I','J','K','L','M',
-              'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-    M= list(input("Nhập M = "))
-    K= list(input("Nhập K = "))
-    Alpha = {}
-    for i in range(0,26):
-        Alpha[lstAlpha[i]] = i # Ánh xạ chỉ số i cho mỗi kí tự
-    # Xử lý mở rộng K
-    moRong_K = K * (len(M) // len(K)) + K[:len(M) % len(K)] # Số lặp toàn bộ + phần dư sau lặp toàn bộ
-
-    C = []  # Output C kết quả
-
-    print("======================================================")
-    print(f'| {"M":<5} | {"K":<5} | {"M index":<8} | {"K index":<8} | {"C index":<8} | {"C"} |') # In tiêu đề cho bảng
-    print("======================================================")
-
-    for m, k in zip(M, moRong_K):
-        m_index = Alpha[m]  # Chỉ số của ký tự m trong bảng chữ cái
-        k_index = Alpha[k]  # Chỉ số của ký tự k trong bảng chữ cái
-        c_index = (m_index + k_index) % 26  # Chỉ số mới cho ký tự mã hóa
-        C.append(lstAlpha[c_index])
-        print(f'| {m:<5} | {k:<5} | {m_index:<8} | {k_index:<8} | {c_index:<8} | {lstAlpha[c_index]} |')
-    print("Kết quả của Vigenere lặp khóa: ",''.join(C), sep="")
-
+    dicAlpha = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6,
+                'H': 7, 'I': 8, 'J': 9, 'K': 10, 'L': 11, 'M': 12, 'N': 13,
+                'O': 14, 'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19,
+                'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24, 'Z': 25}
+    M = "LOVEISBLINDLOVE"
+    K = "WHENIN"
+    while len(K) < len(M):
+        K += K
+    K = K[:len(M)]
+    C = ""
+    for m, k in zip(M, K):
+        m_index = dicAlpha[m]
+        k_index = dicAlpha[k]
+        c_index = (m_index + k_index) % 26
+        for k, v in dicAlpha.items():
+            if v == c_index:
+                C += k
+                break
+    print(f"Output C = {C}")
