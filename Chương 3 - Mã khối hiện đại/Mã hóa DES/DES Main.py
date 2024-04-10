@@ -3,8 +3,6 @@ Mã hóa DES – xây dựng hàm y = DES (x, k) thực hiện mã hóa theo thu
 input: x, k – chuỗi số 64 bit
 Output: y – chuỗi số 64 bít được mã hóa từ x theo thuật toán DES với khóa k
 '''
-
-from DES_MaHoa import *
 from DES_MaHoa import *
 
 FP_table = [

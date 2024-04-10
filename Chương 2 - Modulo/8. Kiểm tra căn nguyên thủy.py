@@ -16,7 +16,7 @@ def phiEuler(n):
             while n%i == 0:
                 n //= i # ta loại bỏ tất cả thừa số i khỏi n
     if n > 1:
-        res -= res/n
+        res *= (1 - 1.0/n)
     return int(res)
 
 def ptThuaSoNguyenTo(n):
