@@ -2,9 +2,8 @@
 Mật mã Ceasar
 Input: M = ABADBEGINNINGMAK
 Key: K = 18
--> Tìm Output: C = STSVTWYAFFAFYESC
+=> Tìm Output: C = STSVTWYAFFAFYESC
 '''
-
 if __name__ == "__main__":
     dicAlpha = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6,
                 'H': 7, 'I': 8, 'J': 9, 'K': 10, 'L': 11, 'M': 12, 'N': 13,

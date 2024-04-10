@@ -15,11 +15,14 @@ if __name__ == "__main__":
     K = K[:len(M)]
     C = ""
     for m, k in zip(M, K):
-        m_index = dicAlpha[m]
-        k_index = dicAlpha[k]
-        c_index = (m_index+k_index)%26
-        for k, v in dicAlpha.items():
-            if v == c_index:
-                C += k
-                break
+        if m in dicAlpha and k in dicAlpha:
+            m_index = dicAlpha[m]
+            k_index = dicAlpha[k]
+            c_index = (m_index+k_index)%26
+            for k, v in dicAlpha.items():
+                if v == c_index:
+                    C += k
+                    break
+        else:
+            C += m
     print(f"Output C = {C}")

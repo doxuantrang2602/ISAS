@@ -12,6 +12,9 @@ if __name__ == "__main__":
     K = "PEINVRXLASWCBYHMOFGKZUQDTJ"
     C = ""
     for m in M:
-        i = dicAlpha[m]
-        C += K[i]
+        if m in dicAlpha:
+            i = dicAlpha[m]
+            C += K[i]
+        else:
+            C += m
     print(f"Output C = {C}")
