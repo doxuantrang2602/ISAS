@@ -1,17 +1,18 @@
-def solveMaHoaChuDon(M, K):
-    lstAlpha= ['A','B','C','D','E','F','G','H','I','J','K','L','M',
-              'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-    AlphaInverse = {}
-    for i in range(len(K)):
-        AlphaInverse[K[i]] = lstAlpha[i] # Ánh xạ từ khóa K trở lại bảng chữ cái lstAlpha
-    M_giai = []  # Lưu bản rõ
-    for c in M:
-        if c in AlphaInverse:
-            M_giai.append(AlphaInverse[c]) # Thêm kí tự được ánh xạ từ K trở lại lstAlpha vào bản rõ
-    return ''.join(M_giai)  # Chuyển list kí tự thành chuỗi
-
 if __name__ == "__main__":
+    dicAlpha = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6,
+                'H': 7, 'I': 8, 'J': 9, 'K': 10, 'L': 11, 'M': 12, 'N': 13,
+                'O': 14, 'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19,
+                'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24, 'Z': 25}
     C = "VUVFTHYVLPGKLVAF"
     K = "PEINVRXLASWCBYHMOFGKZUQDTJ"
-    M_res = solveMaHoaChuDon(C, K)
-    print(f"Bản rõ sau khi giải mã: {M_res}")
+    M = ""
+    for c in C:
+        if c in K:
+            c_index = K.index(c)
+            for k, v in dicAlpha.items():
+                if v == c_index:
+                    M += k
+                    break
+        else:
+            M += c
+    print(f"Bản rõ M = {M}")
