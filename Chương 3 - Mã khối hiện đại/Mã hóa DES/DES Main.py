@@ -24,13 +24,16 @@ def FP(x):
 def DES(x, k):
     K = hexToBin(k)
     M = hexToBin(x)
-    K1 = PC1(K)
-    C, D = SPLIT_KEY(K1)
+    K0 = PC1(K)
+    C0, D0 = SPLIT_KEY(K0)
+    C, D = [], []
+    C.append(C0)
+    D.append(D0)
     Ks = []
     for i in range(16):
-       C = ShiftLeft(C, shift[i])
-       D = ShiftLeft(D, shift[i])
-       Ks.append(PC2(C,D))
+       C.append(ShiftLeft(C[i], shift[i]))
+       D.append(ShiftLeft(D[i], shift[i]))
+       Ks.append(PC2(C[i+1],D[i+1]))
        print(f"Khóa {i+1} = {Ks[i]}")
     IP_M = IP(M)
     L0, R0 = SPLIT_KEY(IP_M)
