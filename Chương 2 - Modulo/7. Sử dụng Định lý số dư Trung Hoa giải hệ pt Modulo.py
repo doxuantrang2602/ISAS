@@ -6,24 +6,7 @@ SỬ DỤNG ĐỊNH LÝ SỐ DƯ TRUNG HOA ĐỂ GIẢI HỆ PHƯƠNG TRÌNH MOD
 Input: m1 = 11; m2 = 13; m3 = 17; a1 = 6; a2 = 11; a3 = 12;
 Tìm Output: x =
 '''
-
-def euclidMoRong(a, n):
-    r1, r2 = n, a
-    x1, x2 = 1, 0
-    y1, y2 = 0, 1
-
-    while r2 != 0:
-        q = r1 // r2  # Tính thương
-        r1, r2 = r2, r1 - q * r2  # Cập nhật r
-        x1, x2 = x2, x1 - q * x2  # Cập nhật x
-        y1, y2 = y2, y1 - q * y2  # Cập nhật y
-    if r1 == 1:
-        res = y1
-    else: res = None
-    # Nếu res là số âm
-    if res is not None and res < 0:
-        res += n
-    return res
+from CacHamBoTro import euclidMoRong
 
 def Solve(m, a):
     M = 1

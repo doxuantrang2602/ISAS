@@ -3,33 +3,7 @@ SỬ DỤNG ĐỊNH LÝ SỐ DƯ TRUNG HOA ĐỂ TÍNH LŨY THỪA modulo 𝒃 =
 Input: a = 113; k = 58; n = 37259
 Tìm Output: b =
 '''
-
-def euclidMoRong(a, n):
-    r1, r2 = n, a
-    x1, x2 = 1, 0
-    y1, y2 = 0, 1
-    while r2 != 0:
-        q = r1 // r2  # Tính thương
-        r1, r2 = r2, r1 - q * r2  # Cập nhật r
-        x1, x2 = x2, x1 - q * x2  # Cập nhật x
-        y1, y2 = y2, y1 - q * y2  # Cập nhật y
-    if r1 == 1:
-        res = y1
-    else: res = None
-    # Nếu res là số âm
-    if res is not None and res < 0:
-        res += n
-    return res
-
-def ptThuaSoNguyenTo(n):
-    lst = []
-    p = 2
-    while n > 1:
-        while n % p == 0:
-            lst.append(p)
-            n //= p
-        p += 1
-    return lst
+from CacHamBoTro import euclidMoRong, ptThuaSoNguyenTo
 
 def dinhLyPhanDuTrungHoa(a, k, n):
     print("Input:")
@@ -60,9 +34,9 @@ def dinhLyPhanDuTrungHoa(a, k, n):
     # Bước 5: Tính A = Σ(ai * ci * Mi) mod M
     A = 0
     for i in range(len(factors)):
-        A += a_values[i] * c_values[i] * M_values[i]
+        A += a_values[i] * c_values[i]
     A %= n
-    print("Tính A = Σ(ai * ci * Mi) mod M:")
+    print("Tính A = Σ(ai * ci) mod n:")
     print("A =", A)
     return A
 

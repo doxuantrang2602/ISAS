@@ -44,14 +44,14 @@ def euclidMoRong(a, n):
     return res
 
 def ptThuaSoNguyenTo(n):
-    s = set()
+    lst = []
     p = 2
     while n > 1:
         while n % p == 0:
-            s.add(p)
+            lst.append(p)
             n //= p
         p += 1
-    return s
+    return lst
 
 def phiEuler(n):
     factors = ptThuaSoNguyenTo(n)
