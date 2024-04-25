@@ -3,7 +3,20 @@ import math
 def tinhMod(a, xA, q):
     return pow(a, xA, q) # a^xA mod q
 
-def tinhLuyThuaModulo(a, m, n):
+def tinhLuyThuaModulo(a,m,n):
+    D = {}
+    i = 1
+    while i <= m:
+        D[i] = pow(a, i, n)
+        i *= 2
+    res = 1
+    for p in sorted(D.keys(), reverse=True):
+        if m >= p:
+            res = (res * D[p]) % n
+            m -= p
+    return res
+
+def tinhLuyThuaModulo2(a, m, n):
     res = 1 # Khởi tạo kết quả
     a = a % n # Chuyển a thành a mod n
     while m > 0:

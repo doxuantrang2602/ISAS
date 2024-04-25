@@ -1,38 +1,36 @@
 def taoMaTranKhoa(K):
     maTran = []
-    # Loại bỏ chữ cái trùng và tạo ma trận từ khóa
     K = "".join(sorted(set(K), key=K.index))
-    alPha = "ABCDEFGHIKLMNOPQRSTUVWXYZ"  # Bỏ qua chữ 'J'
+    alPha = "ABCDEFGHIKLMNOPQRSTUVWXYZ"
+    dsDuyNhat = []
     for k in K + alPha:
-        if k not in maTran:
-            maTran.append(k)
-    return [maTran[i:i+5] for i in range(0, 25, 5)]
+        if k not in dsDuyNhat:
+            dsDuyNhat.append(k)
+    for i in range(0, 25, 5):
+        maTran.append(dsDuyNhat[i:i + 5])
+    return maTran
 
-def timViTri(letter, matrix):
-    for i, row in enumerate(matrix):
-        if letter in row:
-            return (i, row.index(letter))
+def timViTri(x, maTran):
+    for i, row in enumerate(maTran):
+        if x in row:
+            return (i, row.index(x))
     return None
 
-def decodePair(a, b, maTran):
-    row_a, col_a = timViTri(a, maTran)
-    row_b, col_b = timViTri(b, maTran)
-    if row_a == row_b:
-        return maTran[row_a][(col_a-1)%5] + maTran[row_b][(col_b-1)%5]
-    elif col_a == col_b:
-        return maTran[(row_a-1)%5][col_a] + maTran[(row_b-1)%5][col_b]
+def giaiMaPlayfair(a, b, maTran):
+    hang_a, cot_a = timViTri(a, maTran)
+    hang_b, cot_b = timViTri(b, maTran)
+    if hang_a == hang_b:
+        return maTran[hang_a][(cot_a-1)%5] + maTran[hang_b][(cot_b-1)%5]
+    elif cot_a == cot_b:
+        return maTran[(hang_a-1)%5][cot_a] + maTran[(hang_b-1)%5][cot_b]
     else:
-        return maTran[row_a][col_b] + maTran[row_b][col_a]
-
-def giaiMaPlayfair(C, K):
-    maTranKhoa = taoMaTranKhoa(K)
-    M = ""
-    for i in range(0, len(C), 2):
-        M += decodePair(C[i], C[i + 1], maTranKhoa)
-    return M
+        return maTran[hang_a][cot_b] + maTran[hang_b][cot_a]
 
 if __name__ == "__main__":
     K = "BEAUTY"
     C = "EAUTBGHVPOHFWH"
-    M_giaiMa = giaiMaPlayfair(C, K)
-    print("=> Bản rõ sau khi giải mã:", M_giaiMa)
+    maTranKhoa = taoMaTranKhoa(K)
+    M = ""
+    for i in range(0, len(C), 2):
+        M += giaiMaPlayfair(C[i], C[i + 1], maTranKhoa)
+    print("=> Bản rõ sau khi giải mã:", M)
