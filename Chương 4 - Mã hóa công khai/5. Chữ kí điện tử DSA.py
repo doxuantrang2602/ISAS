@@ -14,25 +14,7 @@ a) Khóa công khai của An: yA =
 b) Chữ ký số của An cho bản tin M: (r, s) =
 c) Cách Ba xác minh chữ ký số được đính kèm với bản tin M?
 '''
-def tinhMod(a, xA, q):
-    return pow(a, xA, q) # a^xA mod q
-
-def euclidMoRong(a, n):
-    r1, r2 = n, a
-    x1, x2 = 1, 0
-    y1, y2 = 0, 1
-    while r2 != 0:
-        q = r1 // r2  # Tính thương
-        r1, r2 = r2, r1 - q * r2  # Cập nhật r
-        x1, x2 = x2, x1 - q * x2  # Cập nhật x
-        y1, y2 = y2, y1 - q * y2  # Cập nhật y
-    if r1 == 1:
-        res = y1
-    else: res = None
-    # Nếu res là số âm
-    if res is not None and res < 0:
-        res += n
-    return res
+from CacHamBoTro import tinhMod, euclidMoRong
 
 if __name__ == "__main__":
     H_M = 7

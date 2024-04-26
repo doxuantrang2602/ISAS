@@ -13,7 +13,7 @@ def dinhLyPhanDuTrungHoa(a, k, n):
     print("Phân tích n thành tích các số nguyên tố cùng nhau:")
     print("m1, m2, ..., mk =", factors)
     # Bước 2: Tính M
-    M = n  # M là tích của tất cả các m_i, ở đây chính là n
+    M = n  # Tích các m_i
     # Bước 3: Tính Mi = M / mi cho mỗi i và ci = Mi^(-1) mod mi
     print("Tính Mi và ci:")
     M_values = []
@@ -31,7 +31,7 @@ def dinhLyPhanDuTrungHoa(a, k, n):
     print("Tính ai = a^k mod mi:")
     for i, x in enumerate(a_values,1):
         print(f"a{i} = {x}")
-    # Bước 5: Tính A = Σ(ai * ci * Mi) mod M
+    # Bước 5: Tính A = Σ(ai * ci) mod M
     A = 0
     for i in range(len(factors)):
         A += a_values[i] * c_values[i]

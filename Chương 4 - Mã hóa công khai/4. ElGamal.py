@@ -8,22 +8,7 @@ b) Ba chọn số k = 589 để mã hóa bản tin M = 442 gửi cho An. Bản m
 c) Cách An giải bản mã (C1, C2)?
 '''
 
-def euclidMoRong(a, n):
-    r1, r2 = n, a
-    x1, x2 = 1, 0
-    y1, y2 = 0, 1
-    while r2 != 0:
-        q = r1 // r2
-        r1, r2 = r2, r1 - q * r2
-        x1, x2 = x2, x1 - q * x2
-        y1, y2 = y2, y1 - q * y2
-    if r1 == 1:
-        res = y1
-    else:
-        res = None
-    if res is not None and res < 0:
-        res += n
-    return res
+from CacHamBoTro import euclidMoRong
 
 if __name__ == "__main__":
     q = 7001
